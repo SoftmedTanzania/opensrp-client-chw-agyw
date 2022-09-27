@@ -3,10 +3,8 @@ package org.smartregister.chw.agyw.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.MenuRes;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
-import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 
@@ -15,19 +13,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.Context;
+import org.smartregister.agyw.R;
 import org.smartregister.chw.agyw.contract.AGYWRegisterContract;
 import org.smartregister.chw.agyw.fragment.BaseAGYWRegisterFragment;
 import org.smartregister.chw.agyw.interactor.BaseAGYWRegisterInteractor;
 import org.smartregister.chw.agyw.listener.AGYWBottomNavigationListener;
 import org.smartregister.chw.agyw.model.BaseAGYWRegisterModel;
 import org.smartregister.chw.agyw.presenter.BaseAGYWRegisterPresenter;
-import org.smartregister.chw.agyw.util.Constants;
-import org.smartregister.chw.agyw.util.DBConstants;
 import org.smartregister.chw.agyw.util.AGYWJsonFormUtils;
 import org.smartregister.chw.agyw.util.AGYWUtil;
+import org.smartregister.chw.agyw.util.Constants;
+import org.smartregister.chw.agyw.util.DBConstants;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.listener.BottomNavigationListener;
-import org.smartregister.agyw.R;
 import org.smartregister.repository.BaseRepository;
 import org.smartregister.util.Utils;
 import org.smartregister.view.activity.BaseRegisterActivity;
@@ -37,6 +35,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.MenuRes;
+import androidx.fragment.app.Fragment;
 import timber.log.Timber;
 
 public class BaseAGYWRegisterActivity extends BaseRegisterActivity implements AGYWRegisterContract.View {
@@ -135,7 +135,7 @@ public class BaseAGYWRegisterActivity extends BaseRegisterActivity implements AG
 
     @MenuRes
     public int getMenuResource() {
-        return R.menu.bottom_nav_family_menu;
+        return R.menu.bottom_nav_agyw_menu;
     }
 
     @Override
