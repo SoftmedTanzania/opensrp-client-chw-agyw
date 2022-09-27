@@ -39,6 +39,7 @@ public interface Constants {
         String ACTION = "ACTION";
         String AGYW_FORM_NAME = "AGYW_FORM_NAME";
 
+        String AGE = "AGE";
     }
 
     interface ACTIVITY_PAYLOAD_TYPE {
