@@ -44,15 +44,6 @@ public class BaseServicesFormActivity extends SecuredActivity implements Service
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        BASE_ENTITY_ID = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
-        FORM_NAME = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.AGYW_FORM_NAME);
-        AGE = getIntent().getIntExtra(Constants.ACTIVITY_PAYLOAD.AGE, 0);
-        onStartActivityWithAction();
-    }
-
-    @Override
     public void initializePresenter() {
         presenter = new BaseServiceFormPresenter(this, new BaseServicesFormModel(), new BaseServicesFormInteractor());
     }
@@ -75,7 +66,11 @@ public class BaseServicesFormActivity extends SecuredActivity implements Service
 
     @Override
     protected void onCreation() {
+        BASE_ENTITY_ID = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
+        FORM_NAME = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.AGYW_FORM_NAME);
+        AGE = getIntent().getIntExtra(Constants.ACTIVITY_PAYLOAD.AGE, 0);
         initializePresenter();
+        onStartActivityWithAction();
     }
 
     @Override
@@ -86,6 +81,7 @@ public class BaseServicesFormActivity extends SecuredActivity implements Service
         } catch (Exception e) {
             Timber.e(e);
             displayToast(getString(R.string.error_unable_to_start_form));
+            finish();
         }
     }
 
