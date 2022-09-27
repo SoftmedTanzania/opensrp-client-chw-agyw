@@ -11,8 +11,8 @@
     <string name="saving_dialog_title">Kuhifadhi</string>
     <string name="agyw_followup_visit">Tembeleo la ufuatiliaji</string>
     <string name="record_agyw">Rekodi ufuatiliaji wa agyw</string>
-    <string name="return_to_previous_page">Rudi kwenye wateja wote wa agyw</string>
-    <string name="return_to_agyw_clients">Rudi kwenye wateja wote wa agyw</string>
+    <string name="return_to_previous_page">Rudi kwenye wateja wote wa AGYW</string>
+    <string name="return_to_agyw_clients">Rudi kwenye wateja wote wa AGYW</string>
     <string name="agyw_services">AGYW Services</string>
     <string name="last_visit_40_days_ago">Tembeleo la mwisho %1$s uliyopita</string>
     <string name="view_medical_history">Angalia historia ya huduma</string>
