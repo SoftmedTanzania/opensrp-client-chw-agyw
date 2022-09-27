@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,23 +17,27 @@ import android.widget.TextView;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.smartregister.agyw.R;
 import org.smartregister.chw.agyw.contract.AGYWProfileContract;
 import org.smartregister.chw.agyw.custom_views.BaseAGYWFloatingMenu;
 import org.smartregister.chw.agyw.dao.AGYWDao;
 import org.smartregister.chw.agyw.domain.MemberObject;
 import org.smartregister.chw.agyw.interactor.BaseAGYWProfileInteractor;
 import org.smartregister.chw.agyw.presenter.BaseAGYWProfilePresenter;
-import org.smartregister.chw.agyw.util.Constants;
 import org.smartregister.chw.agyw.util.AGYWUtil;
+import org.smartregister.chw.agyw.util.Constants;
 import org.smartregister.domain.AlertStatus;
 import org.smartregister.helper.ImageRenderHelper;
-import org.smartregister.agyw.R;
 import org.smartregister.view.activity.BaseProfileActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
@@ -64,17 +64,16 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
     protected ImageView imageViewCross;
     protected TextView textViewUndo;
     protected RelativeLayout rlAgywPositiveDate;
-    private TextView tvUpComingServices;
-    private TextView tvFamilyStatus;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
     protected TextView textViewVisitDone;
     protected RelativeLayout visitDone;
     protected LinearLayout recordVisits;
     protected TextView textViewVisitDoneEdit;
     protected TextView textViewRecordAncNotDone;
-
-    private ProgressBar progressBar;
     protected BaseAGYWFloatingMenu baseAGYWFloatingMenu;
+    private TextView tvUpComingServices;
+    private TextView tvFamilyStatus;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+    private ProgressBar progressBar;
 
     public static void startProfileActivity(Activity activity, String baseEntityId) {
         Intent intent = new Intent(activity, BaseAGYWProfileActivity.class);
@@ -176,8 +175,15 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
             this.openUpcomingService();
         } else if (id == R.id.rlFamilyServicesDue) {
             this.openFamilyDueServices();
+        } else if (id == R.id.textview_record_agyw) {
+            this.startAGYWServices();
         }
     }
+
+    protected void startAGYWServices() {
+        BaseAGYWServicesActivity.startMe(this, memberObject.getBaseEntityId());
+    }
+
 
     @Override
     protected void initializePresenter() {
