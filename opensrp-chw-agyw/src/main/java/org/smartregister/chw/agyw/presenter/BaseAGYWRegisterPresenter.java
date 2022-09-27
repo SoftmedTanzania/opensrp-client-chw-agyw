@@ -35,6 +35,16 @@ public class BaseAGYWRegisterPresenter implements AGYWRegisterContract.Presenter
     }
 
     @Override
+    public void startForm(String formName, String entityId, String metadata, String currentLocationId, int age) throws Exception {
+        if (StringUtils.isBlank(entityId)) {
+            return;
+        }
+
+        JSONObject form = model.getFormAsJson(formName, entityId, currentLocationId, age);
+        getView().startFormActivity(form);
+    }
+
+    @Override
     public void saveForm(String jsonString) {
         try {
             getView().showProgressDialog(R.string.saving_dialog_title);

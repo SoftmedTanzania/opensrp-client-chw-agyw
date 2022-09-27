@@ -45,6 +45,7 @@ public class BaseAGYWRegisterActivity extends BaseRegisterActivity implements AG
     protected String FAMILY_BASE_ENTITY_ID;
     protected String ACTION;
     protected String FORM_NAME;
+    protected int AGE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class BaseAGYWRegisterActivity extends BaseRegisterActivity implements AG
         FAMILY_BASE_ENTITY_ID = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.FAMILY_BASE_ENTITY_ID);
         ACTION = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
         FORM_NAME = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.AGYW_FORM_NAME);
+        AGE = getIntent().getIntExtra(Constants.ACTIVITY_PAYLOAD.AGE, 0);
         onStartActivityWithAction();
     }
 
@@ -61,7 +63,7 @@ public class BaseAGYWRegisterActivity extends BaseRegisterActivity implements AG
      */
     protected void onStartActivityWithAction() {
         if (FORM_NAME != null && ACTION != null) {
-            startFormActivity(FORM_NAME, BASE_ENTITY_ID, null);
+            startFormActivity(FORM_NAME, BASE_ENTITY_ID, null, AGE);
         }
     }
 
@@ -76,6 +78,19 @@ public class BaseAGYWRegisterActivity extends BaseRegisterActivity implements AG
             if (mBaseFragment instanceof BaseAGYWRegisterFragment) {
                 String locationId = Context.getInstance().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
                 presenter().startForm(formName, entityId, metaData, locationId);
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+            displayToast(getString(R.string.error_unable_to_start_form));
+        }
+    }
+
+    @Override
+    public void startFormActivity(String formName, String entityId, String metaData, int age) {
+        try {
+            if (mBaseFragment instanceof BaseAGYWRegisterFragment) {
+                String locationId = Context.getInstance().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
+                presenter().startForm(formName, entityId, metaData, locationId, age);
             }
         } catch (Exception e) {
             Timber.e(e);

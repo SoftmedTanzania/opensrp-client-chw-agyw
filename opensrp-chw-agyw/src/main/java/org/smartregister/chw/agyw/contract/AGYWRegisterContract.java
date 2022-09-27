@@ -10,12 +10,16 @@ public interface AGYWRegisterContract {
     interface View extends BaseRegisterContract.View {
         Presenter presenter();
 
+        void startFormActivity(String formName, String entityId, String metadata, int age) throws Exception;
+
         Form getFormConfig();
     }
 
     interface Presenter extends BaseRegisterContract.Presenter {
 
         void startForm(String formName, String entityId, String metadata, String currentLocationId) throws Exception;
+
+        void startForm(String formName, String entityId, String metadata, String currentLocationId, int age) throws Exception;
 
         void saveForm(String jsonString);
 
@@ -24,6 +28,8 @@ public interface AGYWRegisterContract {
     interface Model {
 
         JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception;
+
+        JSONObject getFormAsJson(String formName, String entityId, String currentLocationId, int age) throws Exception;
 
     }
 
