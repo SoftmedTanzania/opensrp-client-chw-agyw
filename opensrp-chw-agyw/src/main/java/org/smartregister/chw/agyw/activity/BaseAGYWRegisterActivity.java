@@ -175,6 +175,9 @@ public class BaseAGYWRegisterActivity extends BaseRegisterActivity implements AG
             }
             startClientProcessing();
         }
+        if (requestCode == Activity.RESULT_CANCELED) {
+            finish();
+        }
     }
 
     private void updateFormField(JSONArray formFieldArrays, String formFieldKey, String updateValue) {
