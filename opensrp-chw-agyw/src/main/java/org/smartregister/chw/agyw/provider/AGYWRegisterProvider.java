@@ -87,13 +87,9 @@ public class AGYWRegisterProvider implements RecyclerViewProvider<AGYWRegisterPr
             viewHolder.patientColumn.setTag(pc);
             viewHolder.patientColumn.setTag(R.id.VIEW_ID, BaseAGYWRegisterFragment.CLICK_VIEW_NORMAL);
 
-            viewHolder.dueButton.setOnClickListener(onClickListener);
-            viewHolder.dueButton.setTag(pc);
-            viewHolder.dueButton.setTag(R.id.VIEW_ID, BaseAGYWRegisterFragment.FOLLOW_UP_VISIT);
             viewHolder.registerColumns.setOnClickListener(onClickListener);
 
             viewHolder.registerColumns.setOnClickListener(v -> viewHolder.patientColumn.performClick());
-            viewHolder.registerColumns.setOnClickListener(v -> viewHolder.dueButton.performClick());
 
         } catch (Exception e) {
             Timber.e(e);
@@ -154,7 +150,6 @@ public class AGYWRegisterProvider implements RecyclerViewProvider<AGYWRegisterPr
         public TextView parentName;
         public TextView textViewVillage;
         public TextView textViewGender;
-        public Button dueButton;
         public View patientColumn;
 
         public View registerColumns;
@@ -167,7 +162,6 @@ public class AGYWRegisterProvider implements RecyclerViewProvider<AGYWRegisterPr
             patientName = itemView.findViewById(R.id.patient_name_age);
             textViewVillage = itemView.findViewById(R.id.text_view_village);
             textViewGender = itemView.findViewById(R.id.text_view_gender);
-            dueButton = itemView.findViewById(R.id.due_button);
             patientColumn = itemView.findViewById(R.id.patient_column);
             registerColumns = itemView.findViewById(R.id.register_columns);
             dueWrapper = itemView.findViewById(R.id.due_button_wrapper);
