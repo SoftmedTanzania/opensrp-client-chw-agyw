@@ -23,6 +23,7 @@ import org.smartregister.chw.agyw.custom_views.BaseAGYWFloatingMenu;
 import org.smartregister.chw.agyw.dao.AGYWDao;
 import org.smartregister.chw.agyw.domain.MemberObject;
 import org.smartregister.chw.agyw.interactor.BaseAGYWProfileInteractor;
+import org.smartregister.chw.agyw.listener.OnClickFloatingMenu;
 import org.smartregister.chw.agyw.presenter.BaseAGYWProfilePresenter;
 import org.smartregister.chw.agyw.util.AGYWUtil;
 import org.smartregister.chw.agyw.util.Constants;
@@ -194,14 +195,45 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
     }
 
     public void initializeFloatingMenu() {
-        if (StringUtils.isNotBlank(memberObject.getPhoneNumber())) {
-            baseAGYWFloatingMenu = new BaseAGYWFloatingMenu(this, memberObject);
-            baseAGYWFloatingMenu.setGravity(Gravity.BOTTOM | Gravity.RIGHT);
-            LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-            addContentView(baseAGYWFloatingMenu, linearLayoutParams);
+        baseAGYWFloatingMenu = new BaseAGYWFloatingMenu(this, memberObject);
+        checkPhoneNumberProvided(StringUtils.isNotBlank(memberObject.getPhoneNumber()));
+        if (showReferralView()) {
+            baseAGYWFloatingMenu.findViewById(R.id.refer_to_facility_layout).setVisibility(View.VISIBLE);
+        } else {
+            baseAGYWFloatingMenu.findViewById(R.id.refer_to_facility_layout).setVisibility(View.GONE);
         }
+        OnClickFloatingMenu onClickFloatingMenu = viewId -> {
+            if (viewId == R.id.agyw_fab) {
+                //Animates the actual FAB
+                baseAGYWFloatingMenu.animateFAB();
+            } else if (viewId == R.id.call_layout) {
+                baseAGYWFloatingMenu.launchCallWidget();
+                baseAGYWFloatingMenu.animateFAB();
+            } else if (viewId == R.id.refer_to_facility_layout) {
+                startReferralForm();
+            } else {
+                Timber.d("Unknown FAB action");
+            }
+        };
+
+        baseAGYWFloatingMenu.setFloatMenuClickListener(onClickFloatingMenu);
+        baseAGYWFloatingMenu.setGravity(Gravity.BOTTOM | Gravity.END);
+        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        addContentView(baseAGYWFloatingMenu, linearLayoutParams);
+    }
+
+    private void checkPhoneNumberProvided(boolean hasPhoneNumber) {
+        BaseAGYWFloatingMenu.redrawWithOption(baseAGYWFloatingMenu, hasPhoneNumber);
+    }
+
+    protected boolean showReferralView() {
+        //in chw return true; in hf return false;
+        return true;
+    }
+
+    public void startReferralForm() {
+        //implement in chw
     }
 
     @Override

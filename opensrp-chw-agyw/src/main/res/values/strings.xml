@@ -65,5 +65,6 @@
     <string name="service_status_complete">Complete</string>
     <string name="form_saved">Form saved successfully</string>
     <string name="menu_AGYW">AGYW</string>
+    <string name="refer_to_facility">refer</string>
 
 </resources>
