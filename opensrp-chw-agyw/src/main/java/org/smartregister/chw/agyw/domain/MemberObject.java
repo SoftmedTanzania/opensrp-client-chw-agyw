@@ -1,5 +1,9 @@
 package org.smartregister.chw.agyw.domain;
 
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.smartregister.util.Utils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,7 +17,8 @@ public class MemberObject implements Serializable {
     private String address;
     private String gender;
     private String uniqueId;
-    private String age;
+    private String dob;
+    private int age;
     private String relationalid;
     private String details;
     private String dateChwAgywTest;
@@ -43,6 +48,7 @@ public class MemberObject implements Serializable {
 
     public MemberObject() {
     }
+
     public String getFirstName() {
         return firstName;
     }
@@ -67,12 +73,20 @@ public class MemberObject implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getAge() {
-        return age;
+    public String getFullName() {
+        return Utils.getName(getFirstName(), getLastName());
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public int getAge() {
+        return new Period(new DateTime(dob), new DateTime()).getYears();
+    }
+
+    public String getDob() {
+        return this.dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public String getAddress() {

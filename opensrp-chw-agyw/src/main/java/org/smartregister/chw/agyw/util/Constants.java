@@ -15,11 +15,17 @@ public interface Constants {
     interface EVENT_TYPE {
         String AGYW_REGISTRATION = "AGYW Registration";
         String AGYW_FOLLOW_UP_VISIT = "Agyw Followup";
+        String AGYW_BIO_MEDICAL_VISIT = "AGYW BIO MEDICAL VISIT";
+        String AGYW_BEHAVIORAL_VISIT = "AGYW BEHAVIORAL VISIT";
+        String AGYW_STRUCTURAL_VISIT = "AGYW STRUCTURAL VISIT";
     }
 
     interface FORMS {
-        String AGYW_REGISTRATION = "agyw_confirmation";
+        String AGYW_REGISTRATION = "agyw_screening";
         String AGYW_FOLLOWUP = "agyw_followup";
+        String AGYW_BIO_MEDICAL = "agyw_bio_medical_services";
+        String AGYW_BEHAVIORAL = "agyw_behavioral_services";
+        String AGYW_STRUCTURAL = "agyw_structural_services";
     }
 
     interface TABLES {
@@ -46,6 +52,12 @@ public interface Constants {
 
     interface AGYW_MEMBER_OBJECT {
         String MEMBER_OBJECT = "memberObject";
+    }
+
+    interface SERVICES {
+        String AGYW_BIO_MEDICAL_SERVICES = "AGYW BIO MEDICAL SERVICES";
+        String AGYW_BEHAVIORAL_SERVICES = "AGYW BEHAVIORAL SERVICES";
+        String AGYW_STRUCTURAL_SERVICES = "AGYW STRUCTURAL SERVICES";
     }
 
 }
