@@ -13,18 +13,18 @@ public interface Constants {
     }
 
     interface EVENT_TYPE {
-        String AGYW_CONFIRMATION = "Agyw Confirmation";
-        String AGYW_FOLLOW_UP_VISIT = "Agyw Follow-up Visit";
+        String AGYW_REGISTRATION = "AGYW Registration";
+        String AGYW_FOLLOW_UP_VISIT = "Agyw Followup";
     }
 
     interface FORMS {
         String AGYW_REGISTRATION = "agyw_confirmation";
-        String AGYW_FOLLOW_UP_VISIT = "agyw_followup_visit";
+        String AGYW_FOLLOWUP = "agyw_followup";
     }
 
     interface TABLES {
-        String AGYW_CONFIRMATION = "ec_agyw_confirmation";
-        String AGYW_FOLLOW_UP = "ec_agyw_follow_up_visit";
+        String AGYW_REGISTER = "ec_agyw_register";
+        String AGYW_FOLLOW_UP = "ec_agyw_followup";
     }
 
     interface ACTIVITY_PAYLOAD {

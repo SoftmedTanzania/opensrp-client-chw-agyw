@@ -76,8 +76,8 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         String entityId = getString(jsonForm, ENTITY_ID);
         String encounter_type = jsonForm.optString(Constants.JSON_FORM_EXTRA.ENCOUNTER_TYPE);
 
-        if (Constants.EVENT_TYPE.AGYW_CONFIRMATION.equals(encounter_type)) {
-            encounter_type = Constants.TABLES.AGYW_CONFIRMATION;
+        if (Constants.EVENT_TYPE.AGYW_REGISTRATION.equals(encounter_type)) {
+            encounter_type = Constants.TABLES.AGYW_REGISTER;
         } else if (Constants.EVENT_TYPE.AGYW_FOLLOW_UP_VISIT.equals(encounter_type)) {
             encounter_type = Constants.TABLES.AGYW_FOLLOW_UP;
         }

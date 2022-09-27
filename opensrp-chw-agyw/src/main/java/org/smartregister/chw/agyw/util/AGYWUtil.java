@@ -126,21 +126,6 @@ public class AGYWUtil {
         return R.mipmap.ic_member;
     }
 
-    public static class CloseAgywMemberFromRegister extends AsyncTask<Void, Void, Void> {
-        private final String baseEntityId;
-
-        public CloseAgywMemberFromRegister(String baseEntityId) {
-            this.baseEntityId = baseEntityId;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            AGYWDao.closeAgywMemberFromRegister(baseEntityId);
-            return null;
-        }
-
-    }
-
     public static String getGenderTranslated(Context context, String gender) {
         if (gender.equalsIgnoreCase(Gender.MALE.toString())) {
             return context.getResources().getString(R.string.male);
