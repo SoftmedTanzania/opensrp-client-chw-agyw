@@ -213,12 +213,6 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         textViewLocation.setText(memberObject.getAddress());
         textViewUniqueID.setText(memberObject.getUniqueId());
 
-        if (StringUtils.isNotBlank(memberObject.getFamilyHead()) && memberObject.getFamilyHead().equals(memberObject.getBaseEntityId())) {
-            findViewById(R.id.family_agyw_head).setVisibility(View.VISIBLE);
-        }
-        if (StringUtils.isNotBlank(memberObject.getPrimaryCareGiver()) && memberObject.getPrimaryCareGiver().equals(memberObject.getBaseEntityId())) {
-            findViewById(R.id.primary_agyw_caregiver).setVisibility(View.VISIBLE);
-        }
         if (memberObject.getAgywTestDate() != null) {
             textview_positive_date.setText(getString(R.string.agyw_positive) + " " + formatTime(memberObject.getAgywTestDate()));
         }
@@ -252,7 +246,7 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
     @Override
     public void refreshMedicalHistory(boolean hasHistory) {
         showProgressBar(false);
-        rlLastVisit.setVisibility(hasHistory ? View.VISIBLE : View.GONE);
+        rlLastVisit.setVisibility(View.GONE);
     }
 
     @Override
@@ -260,8 +254,8 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         showProgressBar(false);
         if (status == AlertStatus.complete)
             return;
-        view_most_due_overdue_row.setVisibility(View.VISIBLE);
-        rlUpcomingServices.setVisibility(View.VISIBLE);
+        view_most_due_overdue_row.setVisibility(View.GONE);
+        rlUpcomingServices.setVisibility(View.GONE);
 
         if (status == AlertStatus.upcoming) {
             tvUpComingServices.setText(AGYWUtil.fromHtml(getString(R.string.vaccine_service_upcoming, service, dateFormat.format(date))));
@@ -283,8 +277,8 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
     }
 
     private void setFamilyStatus(String familyStatus) {
-        view_family_row.setVisibility(View.VISIBLE);
-        rlFamilyServicesDue.setVisibility(View.VISIBLE);
+        view_family_row.setVisibility(View.GONE);
+        rlFamilyServicesDue.setVisibility(View.GONE);
         tvFamilyStatus.setText(familyStatus);
     }
 
