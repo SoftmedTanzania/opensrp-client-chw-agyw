@@ -1,6 +1,6 @@
 package org.smartregister.chw.agyw.interactor;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import org.smartregister.chw.agyw.contract.AGYWProfileContract;
 import org.smartregister.chw.agyw.domain.MemberObject;

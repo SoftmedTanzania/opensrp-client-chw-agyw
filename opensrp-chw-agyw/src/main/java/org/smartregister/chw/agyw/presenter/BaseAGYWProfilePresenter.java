@@ -1,7 +1,7 @@
 package org.smartregister.chw.agyw.presenter;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.smartregister.chw.agyw.contract.AGYWProfileContract;
 import org.smartregister.chw.agyw.domain.MemberObject;
