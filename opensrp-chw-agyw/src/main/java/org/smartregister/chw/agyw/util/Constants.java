@@ -23,9 +23,9 @@ public interface Constants {
     interface EVENT_TYPE {
         String AGYW_REGISTRATION = "AGYW Registration";
         String AGYW_FOLLOW_UP_VISIT = "Agyw Followup";
-        String AGYW_BIO_MEDICAL_VISIT = "AGYW BIO MEDICAL VISIT";
-        String AGYW_BEHAVIORAL_VISIT = "AGYW BEHAVIORAL VISIT";
-        String AGYW_STRUCTURAL_VISIT = "AGYW STRUCTURAL VISIT";
+        String AGYW_BIO_MEDICAL_VISIT = "AGYW Bio Medical Services";
+        String AGYW_BEHAVIORAL_VISIT = "AGYW Behavioral Services";
+        String AGYW_STRUCTURAL_VISIT = "AGYW Structural Services";
         String AGYW_GRADUATE_SERVICES = "AGYW GRADUATE SERVICES";
     }
 

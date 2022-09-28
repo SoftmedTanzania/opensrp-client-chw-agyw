@@ -1,5 +1,6 @@
 package org.smartregister.chw.agyw.dao;
 
+import org.smartregister.agyw.R;
 import org.smartregister.chw.agyw.domain.MemberObject;
 import org.smartregister.dao.AbstractDao;
 
@@ -11,8 +12,7 @@ public class AGYWDao extends AbstractDao {
 
     public static boolean isRegisteredForAgyw(String baseEntityID) {
         String sql = "SELECT count(p.base_entity_id) count FROM ec_agyw_register p " +
-                "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0 AND p.agyw  = 1 " +
-                "AND datetime('NOW') <= datetime(p.last_interacted_with/1000, 'unixepoch', 'localtime','+15 days')";
+                "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0 ";
 
         DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
 
@@ -108,28 +108,27 @@ public class AGYWDao extends AbstractDao {
     }
 
     public static int getPackageStatus(String baseEntityId) {
-        //TODO: update get package status;
+        //is primary package if client has been provided with 9 sbcc sessions, and has been given a referral for HTS in DREAMS
+        //TODO: complete the status check
+        String sql = "SELECT sbcc_intervention_provided FROM ec_agyw_register p " +
+                "WHERE p.base_entity_id = '" + baseEntityId + "' AND p.is_closed = 0";
 
-        //        String sql = "SELECT count(p.base_entity_id) count FROM ec_agyw_register p " +
-        //                "WHERE p.base_entity_id = '" + baseEntityId + "' AND p.is_closed = 0 AND p.agyw  = 1 " +
-        //                "AND datetime('NOW') <= datetime(p.last_interacted_with/1000, 'unixepoch', 'localtime','+15 days')";
-        //
-        //        DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
-        //
-        //        List<Integer> res = readData(sql, dataMap);
+        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "sbcc_intervention_provided");
+
+        List<String> res = readData(sql, dataMap);
+        if(res != null && res.size() > 0 && res.get(0) != null) {
+            if(res.get(0).contains(",")) {
+                if(res.get(0).trim().split(",").length >= 9){
+                    return R.string.primary_package_label;
+                }
+            }
+            return 0;
+        }
         return 0;
     }
 
     public static boolean isEligibleToGraduateServices(String baseEntityId) {
-        //TODO: update get eligibility to graduate
-
-        //        String sql = "SELECT count(p.base_entity_id) count FROM ec_agyw_register p " +
-        //                "WHERE p.base_entity_id = '" + baseEntityId + "' AND p.is_closed = 0 AND p.agyw  = 1 " +
-        //                "AND datetime('NOW') <= datetime(p.last_interacted_with/1000, 'unixepoch', 'localtime','+15 days')";
-        //
-        //        DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
-        //
-        //        List<Integer> res = readData(sql, dataMap);
-        return false;
+        //is eligible to graduate if package status != 0
+        return getPackageStatus(baseEntityId) != 0;
     }
 }
