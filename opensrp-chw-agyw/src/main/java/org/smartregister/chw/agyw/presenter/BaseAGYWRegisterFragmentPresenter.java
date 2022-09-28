@@ -34,7 +34,7 @@ public class BaseAGYWRegisterFragmentPresenter implements AGYWRegisterFragmentCo
 
     @Override
     public String getMainCondition() {
-        return "";
+        return getMainTable() + "." + DBConstants.KEY.IS_CLOSED + " IS 0";
     }
 
     @Override
