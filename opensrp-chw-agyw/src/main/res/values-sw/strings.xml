@@ -51,5 +51,6 @@
     <string name="male">Me</string>
     <string name="female">Ke</string>
     <string name="graduate_beneficiary">Graduate</string>
+    <string name="primary_package_label">Primary Package Status</string>
 
 </resources>

@@ -67,5 +67,6 @@
     <string name="menu_AGYW">AGYW</string>
     <string name="refer_to_facility">refer</string>
     <string name="graduate_beneficiary">Graduate</string>
+    <string name="primary_package_label">Primary Package Status</string>
 
 </resources>
