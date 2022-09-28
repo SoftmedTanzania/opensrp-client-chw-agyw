@@ -50,5 +50,6 @@
     <string name="edit">HARIRI</string>
     <string name="male">Me</string>
     <string name="female">Ke</string>
+    <string name="graduate_beneficiary">Graduate</string>
 
 </resources>
