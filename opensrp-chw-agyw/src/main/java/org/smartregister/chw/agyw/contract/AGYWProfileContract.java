@@ -40,6 +40,8 @@ public interface AGYWProfileContract {
         void refreshProfileBottom();
 
         void recordAgywButton(String visitState);
+
+        void graduateServices(String baseEntityId);
     }
 
     interface Interactor {
@@ -47,6 +49,8 @@ public interface AGYWProfileContract {
         void refreshProfileInfo(MemberObject memberObject, InteractorCallBack callback);
 
         void saveRegistration(String jsonString, final AGYWProfileContract.InteractorCallBack callBack);
+
+        void graduateServices(String baseEntityId);
     }
 
 

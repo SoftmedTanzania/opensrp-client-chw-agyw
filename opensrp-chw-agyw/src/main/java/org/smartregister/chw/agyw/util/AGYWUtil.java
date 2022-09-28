@@ -11,10 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spanned;
@@ -22,19 +19,21 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 import org.opensrp.api.constants.Gender;
+import org.smartregister.agyw.R;
 import org.smartregister.chw.agyw.AGYWLibrary;
 import org.smartregister.chw.agyw.contract.BaseAGYWCallDialogContract;
-import org.smartregister.chw.agyw.dao.AGYWDao;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.agyw.R;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.BaseRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.JsonFormUtils;
 import org.smartregister.util.PermissionUtils;
 
 import java.util.Date;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 import static org.smartregister.util.Utils.getAllSharedPreferences;
@@ -133,5 +132,27 @@ public class AGYWUtil {
             return context.getResources().getString(R.string.female);
         }
         return "";
+    }
+
+    public static void crateGraduateFromServicesEvent(String baseEntityId) throws Exception {
+        AllSharedPreferences allSharedPreferences = AGYWLibrary.getInstance().context().allSharedPreferences();
+        Event baseEvent = getBaseEvent(allSharedPreferences, Constants.EVENT_TYPE.AGYW_GRADUATE_SERVICES, baseEntityId);
+        AGYWUtil.processEvent(allSharedPreferences, baseEvent);
+    }
+
+    private static Event getBaseEvent(AllSharedPreferences allSharedPreferences, String eventName, String baseEntityId) {
+        return (Event) new Event()
+                .withBaseEntityId(baseEntityId)
+                .withEventDate(new Date())
+                .withFormSubmissionId(JsonFormUtils.generateRandomUUIDString())
+                .withEventType(eventName)
+                .withEntityType(Constants.TABLES.AGYW_FOLLOW_UP)
+                .withProviderId(allSharedPreferences.fetchRegisteredANM())
+                .withLocationId(allSharedPreferences.fetchDefaultLocalityId(allSharedPreferences.fetchRegisteredANM()))
+                .withTeamId(allSharedPreferences.fetchDefaultTeamId(allSharedPreferences.fetchRegisteredANM()))
+                .withTeam(allSharedPreferences.fetchDefaultTeam(allSharedPreferences.fetchRegisteredANM()))
+                .withClientDatabaseVersion(AGYWLibrary.getInstance().getDatabaseVersion())
+                .withClientApplicationVersion(AGYWLibrary.getInstance().getApplicationVersion())
+                .withDateCreated(new Date());
     }
 }

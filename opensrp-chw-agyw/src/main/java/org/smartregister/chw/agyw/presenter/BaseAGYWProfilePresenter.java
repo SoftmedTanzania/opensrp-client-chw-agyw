@@ -46,6 +46,15 @@ public class BaseAGYWProfilePresenter implements AGYWProfileContract.Presenter {
     }
 
     @Override
+    public void graduateServices(String baseEntityId) {
+        try {
+            interactor.graduateServices(baseEntityId);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+    }
+
+    @Override
     @Nullable
     public AGYWProfileContract.View getView() {
         if (view != null && view.get() != null)

@@ -3,6 +3,7 @@ package org.smartregister.chw.agyw.interactor;
 import androidx.annotation.VisibleForTesting;
 
 import org.smartregister.chw.agyw.contract.AGYWProfileContract;
+import org.smartregister.chw.agyw.dao.AGYWDao;
 import org.smartregister.chw.agyw.domain.MemberObject;
 import org.smartregister.chw.agyw.util.AppExecutors;
 import org.smartregister.chw.agyw.util.AGYWUtil;
@@ -38,6 +39,19 @@ public class BaseAGYWProfileInteractor implements AGYWProfileContract.Interactor
         Runnable runnable = () -> {
             try {
                 AGYWUtil.saveFormEvent(jsonString);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        };
+        appExecutors.diskIO().execute(runnable);
+    }
+
+    @Override
+    public void graduateServices(String baseEntityId) {
+        Runnable runnable = () -> {
+            try {
+                AGYWUtil.crateGraduateFromServicesEvent(baseEntityId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
