@@ -68,7 +68,7 @@
                         app:civ_border_width="3dp" />
 
                     <org.smartregister.view.customcontrols.CustomFontTextView
-                        android:id="@+id/primary_package"
+                        android:id="@+id/package_status"
                         style="@style/CustomFontTextViewStyle.ClientList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

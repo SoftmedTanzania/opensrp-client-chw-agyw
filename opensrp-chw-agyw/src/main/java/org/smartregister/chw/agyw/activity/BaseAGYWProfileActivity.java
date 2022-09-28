@@ -54,6 +54,8 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
     protected TextView textViewRecordAgyw;
     protected TextView textViewRecordAnc;
     protected TextView textview_positive_date;
+    protected TextView textView_package_status;
+    protected TextView textview_graduate;
     protected View view_last_visit_row;
     protected View view_most_due_overdue_row;
     protected View view_family_row;
@@ -130,6 +132,8 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         textViewRecordAnc = findViewById(R.id.textview_record_anc);
         textViewUndo = findViewById(R.id.textview_undo);
         imageView = findViewById(R.id.imageview_profile);
+        textView_package_status = findViewById(R.id.package_status);
+        textview_graduate = findViewById(R.id.textview_graduate);
 
         textViewRecordAncNotDone.setOnClickListener(this);
         textViewVisitDoneEdit.setOnClickListener(this);
@@ -140,6 +144,7 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         textViewRecordAgyw.setOnClickListener(this);
         textViewRecordAnc.setOnClickListener(this);
         textViewUndo.setOnClickListener(this);
+        textview_graduate.setOnClickListener(this);
 
         imageRenderHelper = new ImageRenderHelper(this);
         memberObject = AGYWDao.getMember(baseEntityId);
@@ -151,9 +156,36 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
     @Override
     protected void setupViews() {
         initializeFloatingMenu();
+        initializePackageStatusView();
+        initializeGraduateServicesView();
         recordAnc(memberObject);
         recordPnc(memberObject);
     }
+
+    public void initializeGraduateServicesView() {
+        boolean isEligibleToGraduate = AGYWDao.isEligibleToGraduateServices(memberObject.getBaseEntityId());
+        if (isEligibleToGraduate) {
+            textview_graduate.setVisibility(View.VISIBLE);
+        } else {
+            textview_graduate.setVisibility(View.GONE);
+        }
+    }
+
+    protected void initializePackageStatusView() {
+        String status = getAGYWPackageStatus();
+        if (StringUtils.isNotBlank(status)) {
+            textView_package_status.setVisibility(View.VISIBLE);
+            textView_package_status.setText(status);
+        }
+    }
+
+    protected String getAGYWPackageStatus() {
+        int status_id = AGYWDao.getPackageStatus(memberObject.getBaseEntityId());
+        if (status_id != 0)
+            return getResources().getString(status_id);
+        return "";
+    }
+
 
     @Override
     public void recordAnc(MemberObject memberObject) {
@@ -178,6 +210,9 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
             this.openFamilyDueServices();
         } else if (id == R.id.textview_record_agyw) {
             this.startAGYWServices();
+        } else if (id == R.id.textview_graduate) {
+            profilePresenter.graduateServices(memberObject.getBaseEntityId());
+            finish();
         }
     }
 
