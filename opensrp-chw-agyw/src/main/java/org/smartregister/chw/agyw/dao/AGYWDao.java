@@ -4,7 +4,6 @@ import org.smartregister.chw.agyw.domain.MemberObject;
 import org.smartregister.dao.AbstractDao;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -106,5 +105,31 @@ public class AGYWDao extends AbstractDao {
             return null;
 
         return res.get(0);
+    }
+
+    public static int getPackageStatus(String baseEntityId) {
+        //TODO: update get package status;
+
+        //        String sql = "SELECT count(p.base_entity_id) count FROM ec_agyw_register p " +
+        //                "WHERE p.base_entity_id = '" + baseEntityId + "' AND p.is_closed = 0 AND p.agyw  = 1 " +
+        //                "AND datetime('NOW') <= datetime(p.last_interacted_with/1000, 'unixepoch', 'localtime','+15 days')";
+        //
+        //        DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
+        //
+        //        List<Integer> res = readData(sql, dataMap);
+        return 0;
+    }
+
+    public static boolean isEligibleToGraduateServices(String baseEntityId) {
+        //TODO: update get eligibility to graduate
+
+        //        String sql = "SELECT count(p.base_entity_id) count FROM ec_agyw_register p " +
+        //                "WHERE p.base_entity_id = '" + baseEntityId + "' AND p.is_closed = 0 AND p.agyw  = 1 " +
+        //                "AND datetime('NOW') <= datetime(p.last_interacted_with/1000, 'unixepoch', 'localtime','+15 days')";
+        //
+        //        DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
+        //
+        //        List<Integer> res = readData(sql, dataMap);
+        return false;
     }
 }
