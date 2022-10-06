@@ -40,6 +40,7 @@ public interface Constants {
     interface TABLES {
         String AGYW_REGISTER = "ec_agyw_register";
         String AGYW_FOLLOW_UP = "ec_agyw_followup";
+        String FAMILY_MEMBER_TABLE = "ec_family_member";
     }
 
     interface ACTIVITY_PAYLOAD {
@@ -70,4 +71,7 @@ public interface Constants {
         String AGYW_STRUCTURAL_SERVICES = "AGYW STRUCTURAL SERVICES";
     }
 
+    interface JSON_FORM_KEY {
+        String UIC_ID = "uic_id";
+    }
 }
