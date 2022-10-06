@@ -68,5 +68,6 @@
     <string name="refer_to_facility">refer</string>
     <string name="graduate_beneficiary">Graduate</string>
     <string name="primary_package_label">Primary Package Status</string>
+    <string name="uic_id">UIC ID: %s</string>
 
 </resources>

@@ -30,6 +30,7 @@ import org.smartregister.chw.agyw.util.Constants;
 import org.smartregister.domain.AlertStatus;
 import org.smartregister.helper.ImageRenderHelper;
 import org.smartregister.view.activity.BaseProfileActivity;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,6 +74,7 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
     protected TextView textViewVisitDoneEdit;
     protected TextView textViewRecordAncNotDone;
     protected BaseAGYWFloatingMenu baseAGYWFloatingMenu;
+    protected TextView textViewUICID;
     private TextView tvUpComingServices;
     private TextView tvFamilyStatus;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
@@ -134,6 +136,7 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         imageView = findViewById(R.id.imageview_profile);
         textView_package_status = findViewById(R.id.package_status);
         textview_graduate = findViewById(R.id.textview_graduate);
+        textViewUICID = findViewById(R.id.textview_uic_id);
 
         textViewRecordAncNotDone.setOnClickListener(this);
         textViewVisitDoneEdit.setOnClickListener(this);
@@ -160,6 +163,7 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         initializeGraduateServicesView();
         recordAnc(memberObject);
         recordPnc(memberObject);
+        showUICID(memberObject.getBaseEntityId());
     }
 
     public void initializeGraduateServicesView() {
@@ -186,6 +190,15 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         return "";
     }
 
+    protected void showUICID(String baseEntityId) {
+        String UIC_ID = AGYWDao.getUIC_ID(baseEntityId);
+        if (StringUtils.isNotBlank(UIC_ID)) {
+            textViewUICID.setVisibility(View.VISIBLE);
+            textViewUICID.setText(getString(R.string.uic_id, UIC_ID.toUpperCase(Locale.ROOT)));
+        } else {
+            textViewUICID.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void recordAnc(MemberObject memberObject) {
