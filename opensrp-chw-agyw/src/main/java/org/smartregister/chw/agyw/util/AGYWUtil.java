@@ -135,7 +135,11 @@ public class AGYWUtil {
     public static void saveFormEvent(final String jsonString) throws Exception {
         AllSharedPreferences allSharedPreferences = AGYWLibrary.getInstance().context().allSharedPreferences();
         Event baseEvent = AGYWJsonFormUtils.processJsonForm(allSharedPreferences, jsonString);
-        if (baseEvent.getEventType().equalsIgnoreCase(Constants.EVENT_TYPE.AGYW_REGISTRATION)) {
+        //add guard clause to break processing if client did not consent
+        if(baseEvent!= null && baseEvent.getEventType().equalsIgnoreCase(Constants.EVENT_TYPE.AGYW_REGISTRATION) && !isClientToBeRegistered(jsonString)){
+            return;
+        }
+        if (baseEvent!= null &&  baseEvent.getEventType().equalsIgnoreCase(Constants.EVENT_TYPE.AGYW_REGISTRATION)) {
             baseEvent.addObs(new Obs().withFormSubmissionField(Constants.JSON_FORM_KEY.UIC_ID).withValue(generateUICID(baseEvent.getBaseEntityId(), jsonString))
                     .withFieldCode(Constants.JSON_FORM_KEY.UIC_ID).withFieldType("formsubmissionField").withFieldDataType("text").withParentCode("").withHumanReadableValues(new ArrayList<>()));
         }
@@ -190,6 +194,23 @@ public class AGYWUtil {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static boolean isClientToBeRegistered(String jsonString) {
+        JSONObject form;
+        try {
+            form = new JSONObject(jsonString);
+            JSONArray fields = AGYWJsonFormUtils.agywFormFields(form);
+            JSONObject consent = AGYWJsonFormUtils.getFieldJSONObject(fields, "consent_to_be_enrolled");
+            if (consent != null) {
+                String consentVal = consent.getString(VALUE);
+                if (StringUtils.isNotBlank(consentVal) && consentVal.equalsIgnoreCase("yes"))
+                    return true;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static CommonPersonObjectClient getCommonPersonObjectClient(@NonNull String baseEntityId) {
