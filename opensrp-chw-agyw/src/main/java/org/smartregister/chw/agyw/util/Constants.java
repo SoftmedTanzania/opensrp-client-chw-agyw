@@ -1,5 +1,8 @@
 package org.smartregister.chw.agyw.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 public interface Constants {
 
     int REQUEST_CODE_GET_JSON = 2244;
@@ -9,7 +12,7 @@ public interface Constants {
     String STEP_THREE = "step3";
     String STEP_FOUR = "step4";
     String STEP_FIVE = "step5";
-    String STEP_SIX= "step6";
+    String STEP_SIX = "step6";
     String STEP_SEVEN = "step7";
     String STEP_EIGHT = "step8";
     String STEP_NINE = "step9";
@@ -73,5 +76,32 @@ public interface Constants {
 
     interface JSON_FORM_KEY {
         String UIC_ID = "uic_id";
+    }
+
+    interface DREAMS_PACKAGE {
+        List<String> behavioral_services_15_24_keys = Arrays.asList("gender_and_sex_education",
+                "reproductive_health",
+                "effective_communication",
+                "sti_hiv_aids",
+                "family_planning",
+                "good_relationships",
+                "gender_based_violence",
+                "sustainable_usage_condoms",
+                "ctc_services",
+                "prep_education",
+                "pep_education",
+                "tb_education",
+                "education_hiv_testing",
+                "provision_iec",
+                "puberty_education_menstrual_hygiene",
+                "life_skills");
+        List<String> behavioral_services_10_14_keys = Arrays.asList("gender_and_sex_education",
+                "reproductive_health",
+                "sti_hiv_aids",
+                "good_relationships",
+                "gender_based_violence",
+                "sustainable_usage_condoms",
+                "puberty_education_menstrual_hygiene",
+                "life_skills");
     }
 }

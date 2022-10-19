@@ -1,6 +1,9 @@
 package org.smartregister.chw.agyw.util;
 
+import android.os.Build;
 import android.util.Log;
+
+import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -12,6 +15,10 @@ import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.util.FormUtils;
+
+import java.util.List;
+
+import androidx.annotation.RequiresApi;
 
 import static org.smartregister.chw.agyw.util.Constants.ENCOUNTER_TYPE;
 import static org.smartregister.chw.agyw.util.Constants.STEP_EIGHT;
@@ -156,6 +163,41 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     public static JSONObject getFormAsJson(String formName) throws Exception {
         return FormUtils.getInstance(AGYWLibrary.getInstance().context().applicationContext()).getFormJson(formName);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void removeOptionIfNotInKeys(JSONObject formQuestion, List<String> keys) throws Exception {
+        //from the form question, get a jsonArray of options
+        JSONArray options = formQuestion.getJSONArray("options");
+
+        // Create a new JSONArray which will contain the new options
+        JSONArray newOptions = new JSONArray();
+
+        int optionsLength = options.length();
+        int iterator;
+        // from the options look for the option with the key that match and add the option to new options
+        for (iterator = 0; iterator < optionsLength; iterator++) {
+            JSONObject option = options.getJSONObject(iterator);
+            // this will get keys that doesn't match remove it from the list
+            if (keys.contains(option.getString("key"))) {
+                newOptions.put(option);
+            }
+        }
+        //clear the current options
+        formQuestion.remove("options");
+        //put new options
+        formQuestion.put("options", newOptions);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void getBehavioralServicesForm(JSONObject form, int age, String enrolledPackage) throws Exception {
+        JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
+
+        //update other_kvp_category
+        JSONObject sbcc_intervention_provided = getFieldJSONObject(fields, "sbcc_intervention_provided");
+        if (sbcc_intervention_provided != null && enrolledPackage.equalsIgnoreCase("dreams"))
+            removeOptionIfNotInKeys(sbcc_intervention_provided, age >= 15 ? Constants.DREAMS_PACKAGE.behavioral_services_15_24_keys : Constants.DREAMS_PACKAGE.behavioral_services_10_14_keys);
     }
 
 }
