@@ -144,4 +144,17 @@ public class AGYWDao extends AbstractDao {
         //is eligible to graduate if package status != 0
         return getPackageStatus(baseEntityId) != 0;
     }
+
+    public static String getEnrolledProgram(String baseEntityId) {
+        String sql = "SELECT program_name FROM ec_agyw_register p " +
+                " WHERE p.base_entity_id = '" + baseEntityId + "' AND p.is_closed = 0 ";
+
+        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "program_name");
+
+        List<String> res = readData(sql, dataMap);
+        if(res != null && res.size() != 0 && res.get(0)!= null){
+            return res.get(0);
+        }
+        return "";
+    }
 }
