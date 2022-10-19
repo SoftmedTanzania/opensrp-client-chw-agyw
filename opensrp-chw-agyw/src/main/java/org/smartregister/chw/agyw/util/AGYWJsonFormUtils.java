@@ -16,6 +16,7 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.util.FormUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.RequiresApi;
@@ -167,6 +168,9 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void removeOptionIfNotInKeys(JSONObject formQuestion, List<String> keys) throws Exception {
+        if (keys.isEmpty() || (keys.size() == 1 && StringUtils.isBlank(keys.get(0)))) {
+            return;
+        }
         //from the form question, get a jsonArray of options
         JSONArray options = formQuestion.getJSONArray("options");
 
@@ -194,20 +198,29 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static void getBehavioralServicesForm(JSONObject form, int age, String enrolledPackage) throws Exception {
         JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
 
-        //update other_kvp_category
+        //update sbcc_intervention_provided
         JSONObject sbcc_intervention_provided = getFieldJSONObject(fields, "sbcc_intervention_provided");
-        if (sbcc_intervention_provided != null && enrolledPackage.equalsIgnoreCase("dreams"))
+        if (sbcc_intervention_provided != null && enrolledPackage.equalsIgnoreCase("dreams")) {
             removeOptionIfNotInKeys(sbcc_intervention_provided, age >= 15 ? Constants.DREAMS_PACKAGE.behavioral_services_15_24_keys : Constants.DREAMS_PACKAGE.behavioral_services_10_14_keys);
+        } else if (sbcc_intervention_provided != null) {
+            removeOptionIfNotInKeys(sbcc_intervention_provided, age >= 15 ? Constants.NON_DREAMS_PACKAGE.behavioral_services_15_24_keys : Collections.singletonList(""));
+
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static void getStructuralServicesForm(JSONObject form, int age, String enrolledPackage) throws Exception {
+    public static void getStructuralServicesForm(JSONObject form, int age, String
+            enrolledPackage) throws Exception {
         JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
 
-        //update other_kvp_category
+        //update economic_empowerment_education
         JSONObject economic_empowerment_education = getFieldJSONObject(fields, "economic_empowerment_education");
-        if (economic_empowerment_education != null && enrolledPackage.equalsIgnoreCase("dreams"))
+        if (economic_empowerment_education != null && enrolledPackage.equalsIgnoreCase("dreams")) {
             removeOptionIfNotInKeys(economic_empowerment_education, age >= 15 ? Constants.DREAMS_PACKAGE.structural_services_15_24_keys : Constants.DREAMS_PACKAGE.structural_services_10_14_keys);
+        } else if (economic_empowerment_education != null) {
+            //catch for non dreams
+            removeOptionIfNotInKeys(economic_empowerment_education, age >= 15 ? Constants.NON_DREAMS_PACKAGE.structural_services_15_24_keys : Collections.singletonList(""));
+        }
     }
 
 }

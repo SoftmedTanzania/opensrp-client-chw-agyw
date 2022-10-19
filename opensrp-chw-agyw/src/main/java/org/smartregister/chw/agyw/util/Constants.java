@@ -122,4 +122,39 @@ public interface Constants {
                 "financial_edu_and_investments");
 
     }
+
+    interface NON_DREAMS_PACKAGE {
+        List<String> behavioral_services_15_24_keys = Arrays.asList("gender_and_sex_education",
+                "reproductive_health",
+                "effective_communication",
+                "sti_hiv_aids",
+                "family_planning",
+                "good_relationships",
+                "gender_based_violence",
+                "sustainable_usage_condoms",
+                "ctc_services",
+                "prep_education",
+                "pep_education",
+                "tb_education",
+                "education_hiv_testing",
+                "provision_iec",
+                "puberty_education_menstrual_hygiene",
+                "life_skills");
+
+        List<String> structural_services_15_24_keys = Arrays.asList("group_entrepreneurial_skills",
+                "practical_skills",
+                "entrepreneurship_tools",
+                "self_emp_and_emp",
+                "saccos_vicoba",
+                "savings_mgmt",
+                "credit_mgmt",
+                "planning_a_budget",
+                "starting_a_business",
+                "prepare_business_plan",
+                "business_mgmt",
+                "commercial_banking_services",
+                "marketing_research",
+                "financial_edu_and_investments");
+
+    }
 }
