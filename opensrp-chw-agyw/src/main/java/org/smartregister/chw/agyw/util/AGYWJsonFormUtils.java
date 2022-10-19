@@ -200,4 +200,14 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             removeOptionIfNotInKeys(sbcc_intervention_provided, age >= 15 ? Constants.DREAMS_PACKAGE.behavioral_services_15_24_keys : Constants.DREAMS_PACKAGE.behavioral_services_10_14_keys);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void getStructuralServicesForm(JSONObject form, int age, String enrolledPackage) throws Exception {
+        JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
+
+        //update other_kvp_category
+        JSONObject economic_empowerment_education = getFieldJSONObject(fields, "economic_empowerment_education");
+        if (economic_empowerment_education != null && enrolledPackage.equalsIgnoreCase("dreams"))
+            removeOptionIfNotInKeys(economic_empowerment_education, age >= 15 ? Constants.DREAMS_PACKAGE.structural_services_15_24_keys : Constants.DREAMS_PACKAGE.structural_services_10_14_keys);
+    }
+
 }

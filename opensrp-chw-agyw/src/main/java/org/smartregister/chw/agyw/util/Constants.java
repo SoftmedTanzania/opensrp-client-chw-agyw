@@ -103,5 +103,23 @@ public interface Constants {
                 "sustainable_usage_condoms",
                 "puberty_education_menstrual_hygiene",
                 "life_skills");
+        List<String> structural_services_15_24_keys = Arrays.asList("group_entrepreneurial_skills",
+                "practical_skills",
+                "entrepreneurship_tools",
+                "self_emp_and_emp",
+                "saccos_vicoba",
+                "savings_mgmt",
+                "credit_mgmt",
+                "planning_a_budget",
+                "starting_a_business",
+                "prepare_business_plan",
+                "business_mgmt",
+                "commercial_banking_services",
+                "marketing_research",
+                "financial_edu_and_investments");
+        List<String> structural_services_10_14_keys = Arrays.asList("savings_mgmt",
+                "planning_a_budget",
+                "financial_edu_and_investments");
+
     }
 }

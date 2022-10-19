@@ -27,6 +27,9 @@ public class BaseServicesFormModel implements ServicesFormsContract.Model {
             AGYWJsonFormUtils.getBehavioralServicesForm(jsonObject, age, enrolledPackage);
         }
 
+        if (formName.equals(Constants.FORMS.AGYW_STRUCTURAL) && StringUtils.isNotBlank(enrolledPackage)) {
+            AGYWJsonFormUtils.getStructuralServicesForm(jsonObject, age, enrolledPackage);
+        }
         return jsonObject;
     }
 }
