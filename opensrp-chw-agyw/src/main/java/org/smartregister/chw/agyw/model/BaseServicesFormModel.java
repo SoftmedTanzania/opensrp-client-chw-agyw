@@ -23,6 +23,10 @@ public class BaseServicesFormModel implements ServicesFormsContract.Model {
             global.put("age", age);
         }
 
+        if(formName.equals(Constants.FORMS.AGYW_BIO_MEDICAL) && StringUtils.isNotBlank(enrolledPackage)) {
+            AGYWJsonFormUtils.getBioMedicalServicesForm(jsonObject, age, enrolledPackage);
+        }
+
         if (formName.equals(Constants.FORMS.AGYW_BEHAVIORAL) && StringUtils.isNotBlank(enrolledPackage)) {
             AGYWJsonFormUtils.getBehavioralServicesForm(jsonObject, age, enrolledPackage);
         }

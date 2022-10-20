@@ -209,6 +209,18 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void getBioMedicalServicesForm(JSONObject form, int age, String enrolledPackage) throws Exception {
+        JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
+
+        if (enrolledPackage.equalsIgnoreCase("dreams")) {
+            if(age < 15) {
+                removeQuestion(fields, "condom_provided");
+            }
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void getStructuralServicesForm(JSONObject form, int age, String
             enrolledPackage) throws Exception {
         JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
