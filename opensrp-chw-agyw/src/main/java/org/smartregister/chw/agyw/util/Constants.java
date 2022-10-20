@@ -96,8 +96,8 @@ public interface Constants {
                 "puberty_education_menstrual_hygiene",
                 "life_skills");
         List<String> behavioral_services_10_14_keys = Arrays.asList("gender_and_sex_education",
-                "reproductive_health",
-                "sti_hiv_aids",
+                "reproductive_health_education",
+                "sti_hiv_aids_education",
                 "good_relationships",
                 "gender_based_violence",
                 "sustainable_usage_condoms",
@@ -119,7 +119,7 @@ public interface Constants {
                 "financial_edu_and_investments");
         List<String> structural_services_10_14_keys = Arrays.asList("savings_mgmt",
                 "planning_a_budget",
-                "financial_edu_and_investments");
+                "financial_edu_basics");
 
     }
 
