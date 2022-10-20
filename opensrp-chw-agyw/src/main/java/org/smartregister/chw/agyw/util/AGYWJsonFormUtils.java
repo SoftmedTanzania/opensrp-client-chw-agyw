@@ -217,10 +217,37 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         JSONObject economic_empowerment_education = getFieldJSONObject(fields, "economic_empowerment_education");
         if (economic_empowerment_education != null && enrolledPackage.equalsIgnoreCase("dreams")) {
             removeOptionIfNotInKeys(economic_empowerment_education, age >= 15 ? Constants.DREAMS_PACKAGE.structural_services_15_24_keys : Constants.DREAMS_PACKAGE.structural_services_10_14_keys);
+            if (age < 15) {
+                removeQuestion(fields, "entrepreneurial_tools");
+                removeQuestion(fields, "given_capital");
+            }
         } else if (economic_empowerment_education != null) {
             //catch for non dreams
             removeOptionIfNotInKeys(economic_empowerment_education, age >= 15 ? Constants.NON_DREAMS_PACKAGE.structural_services_15_24_keys : Collections.singletonList(""));
+            if(age < 10) {
+                removeQuestion(fields, "empower_girls");
+            }
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void removeQuestion(JSONArray fields, String key) throws JSONException {
+        Integer position = getFieldJSONObjectPosition(fields, key);
+        if (position != null)
+            fields.remove(position);
+    }
+
+    public static Integer getFieldJSONObjectPosition(JSONArray fields, String key) throws JSONException {
+        int length = fields.length();
+        for (int iterator = 0; iterator < length; iterator++) {
+            JSONObject option = fields.getJSONObject(iterator);
+
+            if (option.getString("key").equals(key)) {
+                return iterator;
+            }
+        }
+
+        return null;
     }
 
 }
