@@ -1,6 +1,9 @@
 package org.smartregister.chw.agyw.util;
 
+import android.os.Build;
 import android.util.Log;
+
+import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -12,6 +15,11 @@ import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.util.FormUtils;
+
+import java.util.Collections;
+import java.util.List;
+
+import androidx.annotation.RequiresApi;
 
 import static org.smartregister.chw.agyw.util.Constants.ENCOUNTER_TYPE;
 import static org.smartregister.chw.agyw.util.Constants.STEP_EIGHT;
@@ -156,6 +164,102 @@ public class AGYWJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     public static JSONObject getFormAsJson(String formName) throws Exception {
         return FormUtils.getInstance(AGYWLibrary.getInstance().context().applicationContext()).getFormJson(formName);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void removeOptionIfNotInKeys(JSONObject formQuestion, List<String> keys) throws Exception {
+        if (keys.isEmpty() || (keys.size() == 1 && StringUtils.isBlank(keys.get(0)))) {
+            return;
+        }
+        //from the form question, get a jsonArray of options
+        JSONArray options = formQuestion.getJSONArray("options");
+
+        // Create a new JSONArray which will contain the new options
+        JSONArray newOptions = new JSONArray();
+
+        int optionsLength = options.length();
+        int iterator;
+        // from the options look for the option with the key that match and add the option to new options
+        for (iterator = 0; iterator < optionsLength; iterator++) {
+            JSONObject option = options.getJSONObject(iterator);
+            // this will get keys that doesn't match remove it from the list
+            if (keys.contains(option.getString("key"))) {
+                newOptions.put(option);
+            }
+        }
+        //clear the current options
+        formQuestion.remove("options");
+        //put new options
+        formQuestion.put("options", newOptions);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void getBehavioralServicesForm(JSONObject form, int age, String enrolledPackage) throws Exception {
+        JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
+
+        //update sbcc_intervention_provided
+        JSONObject sbcc_intervention_provided = getFieldJSONObject(fields, "sbcc_intervention_provided");
+        if (sbcc_intervention_provided != null && enrolledPackage.equalsIgnoreCase("dreams")) {
+            removeOptionIfNotInKeys(sbcc_intervention_provided, age >= 15 ? Constants.DREAMS_PACKAGE.behavioral_services_15_24_keys : Constants.DREAMS_PACKAGE.behavioral_services_10_14_keys);
+        } else if (sbcc_intervention_provided != null) {
+            removeOptionIfNotInKeys(sbcc_intervention_provided, age >= 15 ? Constants.NON_DREAMS_PACKAGE.behavioral_services_15_24_keys : Collections.singletonList(""));
+
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void getBioMedicalServicesForm(JSONObject form, int age, String enrolledPackage) throws Exception {
+        JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
+
+        if (enrolledPackage.equalsIgnoreCase("dreams")) {
+            if(age < 15) {
+                removeQuestion(fields, "condom_provided");
+            }
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void getStructuralServicesForm(JSONObject form, int age, String
+            enrolledPackage) throws Exception {
+        JSONArray fields = form.getJSONObject(Constants.STEP_ONE).getJSONArray(JsonFormConstants.FIELDS);
+
+        //update economic_empowerment_education
+        JSONObject economic_empowerment_education = getFieldJSONObject(fields, "economic_empowerment_education");
+        if (economic_empowerment_education != null && enrolledPackage.equalsIgnoreCase("dreams")) {
+            removeOptionIfNotInKeys(economic_empowerment_education, age >= 15 ? Constants.DREAMS_PACKAGE.structural_services_15_24_keys : Constants.DREAMS_PACKAGE.structural_services_10_14_keys);
+            if (age < 15) {
+                removeQuestion(fields, "entrepreneurial_tools");
+                removeQuestion(fields, "given_capital");
+            }
+        } else if (economic_empowerment_education != null) {
+            //catch for non dreams
+            removeOptionIfNotInKeys(economic_empowerment_education, age >= 15 ? Constants.NON_DREAMS_PACKAGE.structural_services_15_24_keys : Collections.singletonList(""));
+            if(age < 10) {
+                removeQuestion(fields, "empower_girls");
+            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void removeQuestion(JSONArray fields, String key) throws JSONException {
+        Integer position = getFieldJSONObjectPosition(fields, key);
+        if (position != null)
+            fields.remove(position);
+    }
+
+    public static Integer getFieldJSONObjectPosition(JSONArray fields, String key) throws JSONException {
+        int length = fields.length();
+        for (int iterator = 0; iterator < length; iterator++) {
+            JSONObject option = fields.getJSONObject(iterator);
+
+            if (option.getString("key").equals(key)) {
+                return iterator;
+            }
+        }
+
+        return null;
     }
 
 }
