@@ -52,5 +52,8 @@
     <string name="female">Ke</string>
     <string name="graduate_beneficiary">Hitimisho</string>
     <string name="primary_package_label">Amemaliza huduma za msingi</string>
+    <string name="bio_medical_services">Afua za Kitabibu</string>
+    <string name="behavioral_services">Afua za Afya na Mabadiliko ya Tabia</string>
+    <string name="structural_services">Afua za kimuundo</string>
 
 </resources>
