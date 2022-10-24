@@ -166,6 +166,18 @@ public class BaseAGYWProfileActivity extends BaseProfileActivity implements AGYW
         showUICID(memberObject.getBaseEntityId());
     }
 
+    @Override
+    protected void onResumption() {
+        super.onResumption();
+        setupViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupViews();
+    }
+
     public void initializeGraduateServicesView() {
         boolean isEligibleToGraduate = AGYWDao.isEligibleToGraduateServices(memberObject.getBaseEntityId(), memberObject.getAge());
         if (isEligibleToGraduate) {
