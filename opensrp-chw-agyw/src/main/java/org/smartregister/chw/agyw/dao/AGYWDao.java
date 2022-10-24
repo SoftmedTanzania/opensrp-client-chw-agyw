@@ -126,7 +126,7 @@ public class AGYWDao extends AbstractDao {
                 "WHERE p.base_entity_id = '" + baseEntityId + "' AND p.is_closed = 0";
 
         DataMap<String> behavioralDataMap = cursor -> getCursorValue(cursor, "sbcc_intervention_provided");
-        DataMap<String> structuralDataMap = cursor -> getCursorValue(cursor, "sbcc_intervention_provided");
+        DataMap<String> structuralDataMap = cursor -> getCursorValue(cursor, "economic_empowerment_education");
 
         List<String> behavioralRes = readData(sql, behavioralDataMap);
         List<String> structuralRes = readData(sql, structuralDataMap);
